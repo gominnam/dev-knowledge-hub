@@ -1,0 +1,15 @@
+package com.hello.tdd.money;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class MoneyTest {
+
+    @Test
+    public void testMulitplication() {
+        Dollar five = new Dollar(5);
+        five.times(2);
+        assertEquals(10, five.amount);
+    }
+}
