@@ -39,11 +39,14 @@ public class Money implements Expression {
         return new Money(amount, "CHF");
     }
 
-    Expression times(int multiplier){
+    public Expression times(int multiplier){
         return new Money(amount * multiplier, currency);
     }
 
     public Expression plus(Expression addend) {
+        if (addend instanceof Money && this.currency().equals(((Money) addend).currency())) {
+            return new Money(this.amount + ((Money) addend).amount, this.currency);
+        }
         return new Sum(this, addend);
     }
 
