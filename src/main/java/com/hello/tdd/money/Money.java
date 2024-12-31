@@ -6,7 +6,7 @@ package com.hello.tdd.money;
 2. 메서드에서 사용되면 추상메서드라 하며 구현부가 없으며, 상속받는 클래스에서 반드시 구현해야 합니다.
 3. 공통적인 기능을 제공하면서, 구현은 하위 클래스에 위임(재사용성, 유지보수 용이)
  */
-public class Money {
+public class Money implements Expression {
     protected int amount;
     protected String currency;
 
@@ -41,6 +41,10 @@ public class Money {
 
     Money times(int multiplier){
         return new Money(amount * multiplier, currency);
+    }
+
+    Expression plus(Money addend) {
+        return new Money(amount + addend.amount, currency);
     }
 
     public boolean equals(Object object) {
