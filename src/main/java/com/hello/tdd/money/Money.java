@@ -6,7 +6,7 @@ package com.hello.tdd.money;
 2. 메서드에서 사용되면 추상메서드라 하며 구현부가 없으며, 상속받는 클래스에서 반드시 구현해야 합니다.
 3. 공통적인 기능을 제공하면서, 구현은 하위 클래스에 위임(재사용성, 유지보수 용이)
  */
-public abstract class Money {
+public class Money {
     protected int amount;
     protected String currency;
 
@@ -20,8 +20,6 @@ public abstract class Money {
         this.amount = amount;
         this.currency = currency;
     }
-
-    abstract Money times(int multiplier);
 
     public String currency(){
         return currency;
@@ -41,9 +39,17 @@ public abstract class Money {
         return new Franc(amount, "CHF");
     }
 
+    Money times(int multiplier){
+        return new Money(amount * multiplier, currency);
+    }
+
     public boolean equals(Object object) {
         Money money = (Money) object;
         return amount == money.amount
-                && getClass().equals(money.getClass());
+                && currency().equals(money.currency());
+    }
+
+    public String toString() {
+        return amount + " " + currency;
     }
 }
