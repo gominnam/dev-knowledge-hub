@@ -31,4 +31,6 @@ public class ReentrantLockTest {
 
         assertTrue(outContent.toString().contains("Thread t1 was interrupted"));
     }
+
+
 }
