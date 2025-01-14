@@ -43,5 +43,6 @@ class ConditionThreadTest {
 
         producer.start();
         consumer.start();
+
     }
 }
