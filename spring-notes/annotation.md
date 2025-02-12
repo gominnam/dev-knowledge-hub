@@ -11,6 +11,23 @@
 - @Controller와 @ResponseBody를 합친 어노테이션으로 HTTP 요청에 대한 응답을 JSON 형태로 반환한다.
 2. RequestMapping
 - 요청 URL을 매핑하는 어노테이션으로 클래스 레벨과 메서드 레벨에 사용할 수 있다.
+3. @RestControllerAdvice
+- @ControllerAdvice와 @ResponseBody를 합친 어노테이션으로 예외 처리를 위한 클래스에 사용한다.
+- @ControllerAdvice는 전역적으로 예외를 처리하는 클래스에 사용한다.
+- @ResponseBody는 메서드의 반환 값을 JSON 형태로 반환한다.
+- @ExceptionHandler는 특정 예외를 처리하는 메서드에 사용한다.
+- @ResponseStatus는 응답 상태 코드를 지정하는 어노테이션
+```java
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(EventNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<String> handleEventNotFoundException(EventNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+}
+```
 
 </br></br>
 
@@ -57,6 +74,24 @@ User user = User.builder()
 5. @Embedded
 - 객체를 엔티티의 필드로 사용할 때 사용하는 어노테이션
 - 별도의 테이블이 아닌 엔티티의 필드로 사용할 수 있다. (가독성 향상)
+6. @ManyToOne
+- 다대일 관계를 매핑할 때 사용하는 어노테이션
+```java
+@ManyToOne(fetch = FetchType.LAZY) // @ManyToOne은 기본적으로 EAGER로 설정되어 있으므로 LAZY로 설정할 수 있다.
+@OneToMany(mappedBy = "team") // mappedBy 속성을 사용하여 양방향 매핑을 할 수 있다.
+private Team team; // table 명 
+```
+7. @OneToMany
+- 일대 다 관계를 매핑할 때 사용하는 어노테이션
+- mappedBy 속성을 사용하여 양방향 매핑을 할 수 있다.
+- cascade 속성을 사용하여 연관된 엔티티의 상태를 함께 변경.
+- orphanRemoval 속성을 사용하여 연관된 엔티티를 삭제.
+```java
+private List<Member> members; // table 명
+@OneToMany(mappedBy = "team", cascade = CascadeType.ALL, orphanRemoval = true)
+```
+8. @JoinColumn
+- 외래키를 매핑할 때 사용하는 어노테이션
 
 </br></br>
 
