@@ -11,8 +11,7 @@
 - @Controller와 @ResponseBody를 합친 어노테이션으로 HTTP 요청에 대한 응답을 JSON 형태로 반환한다.
 2. RequestMapping
 - 요청 URL을 매핑하는 어노테이션으로 클래스 레벨과 메서드 레벨에 사용할 수 있다.
-3. @RestControllerAdvice
-- @ControllerAdvice와 @ResponseBody를 합친 어노테이션으로 예외 처리를 위한 클래스에 사용한다.
+3. @RestControllerAdvice // @ControllerAdvice와 @ResponseBody를 합친 어노테이션으로 예외 처리를 위한 클래스에 사용한다.
 - @ControllerAdvice는 전역적으로 예외를 처리하는 클래스에 사용한다.
 - @ResponseBody는 메서드의 반환 값을 JSON 형태로 반환한다.
 - @ExceptionHandler는 특정 예외를 처리하는 메서드에 사용한다.
@@ -92,6 +91,10 @@ private List<Member> members; // table 명
 ```
 8. @JoinColumn
 - 외래키를 매핑할 때 사용하는 어노테이션
+9. @JsonIgnore
+- JSON 응답 시 특정 필드를 제외할 때 사용하는 어노테이션 (양방향 관계에서 순환 참조가 발생할 때 사용)
+10. @EnableJpaAuditing
+- Spring Data JPA에서 제공하는 엔티티 생성 및 수정 시간을 자동으로 관리하도록 도와준다.
 
 </br></br>
 
@@ -111,5 +114,13 @@ void setUp() {
     mockMvc = MockMvcBuilders.standaloneSetup(eventController).build();
 }
 ```
+
+### Spring Annotation
+
+1. @PostConstruct
+- 빈이 생성된 후 초기화 작업을 수행하는 메서드에 사용하는 어노테이션
+- 빈 의존성 주입이 완료된 후 호출된다.
+2. @EventListener(ApplicationReadyEvent.class)
+- Spring 애플리케이션이 완전히 시작된 후 실행되는 메서드에 사용한다.
 
 </br></br>
