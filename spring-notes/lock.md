@@ -44,6 +44,12 @@ Ticket findByIdForUpdate(@Param("id") Long id);
 SELECT * FROM ticket WHERE ticket_id = 1 FOR UPDATE;
 ```
 - 데이터가 잠겨있는 상태에서 다른 사용자는 쓰기 잠금이 해제될 때까지 대기하게 된다.
+- 비관적 잠금은 Dead Lock이 생길 수 있는 단점이 있다. ex) 사용자 a가 1번 티켓 잠금, 2번 대기 / 사용자 b가 2번 티켓 잠금, 1번 대기 -> Dead Lock 발생
+```java
+// 대기하지 않고 바로 예외를 발생시키는 방법 (nativeQuery의 NOWAIT을 직접 사용)
+@Query(value = "SELECT * FROM ticket WHERE ticket_id IN (:ticketIds) AND status = 'AVAILABLE' FOR UPDATE NOWAIT", nativeQuery = true)
+List<Ticket> findAvailableTicketsWithLock(@Param("ticketIds") List<Long> ticketIds);
+```
 
 </br></br>
 

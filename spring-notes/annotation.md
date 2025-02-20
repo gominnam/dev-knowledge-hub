@@ -34,6 +34,7 @@ public class GlobalExceptionHandler {
 
 1. @Data
 - @ToString, @EqualsAndHashCode, @Getter, @Setter, @RequiredArgsConstructor를 한번에 사용하는 어노테이션
+- @RequiredArgsConstructor는 final이나 @NonNull인 필드 값만 파라미터로 받는 생성자를 생성한다.
 2. @NoArgsConstructor
 - 파라미터가 없는 기본 생성자를 생성하는 어노테이션
 ```java
