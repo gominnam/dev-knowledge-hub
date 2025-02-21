@@ -27,6 +27,28 @@ public class GlobalExceptionHandler {
     }
 }
 ```
+4. Spring에서의 Cache Annotation 
+
+@Cacheable: 캐시 채우기를 트리거합니다.
+
+@CacheEvict: 캐시 삭제를 트리거합니다.
+
+@CachePut: 메서드 실행을 방해하지 않고 캐시를 업데이트합니다.
+
+@Caching: 메서드에 적용할 여러 캐시 작업을 다시 그룹화합니다.
+
+@CacheConfig: 클래스 수준에서 몇 가지 공통적인 캐시 관련 설정을 공유합니다.
+```java
+// Reference: https://docs.spring.io/spring-framework/reference/integration/cache/annotations.html#cache-annotations-cacheable
+@Cacheable(cacheNames="books", key="#isbn") // 특정 인수를 키로 사용
+public Book findBook(ISBN isbn, boolean checkWarehouse, boolean includeUsed)
+
+@Cacheable(cacheNames="books", key="#isbn.rawNumber") // 특정 인수의 필드를 키로 사용
+public Book findBook(ISBN isbn, boolean checkWarehouse, boolean includeUsed)
+
+@Cacheable(cacheNames="books", key="T(someType).hash(#isbn)") // 특정 인수의 메서드 호출을 키로 사용(ex. someType.hash(isbn))
+public Book findBook(ISBN isbn, boolean checkWarehouse, boolean includeUsed)
+```
 
 </br></br>
 

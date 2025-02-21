@@ -231,7 +231,7 @@ class TestRunner {
 ```java
 @Query(value = "SELECT * FROM ticket WHERE ticket_id IN (:ticketIds) AND status = 'AVAILABLE' FOR UPDATE NOWAIT", nativeQuery = true)
 ```
-- 비관적 잠금 `NOWAIT`으로 인해 잠금을 얻지 못하는 예외 발생
+- 비관적 잠금 `NOWAIT`으로 인해 잠금을 얻지 못하는 예외처리를 제대로 처리하지 못하여 문제 발생
 [safeticket] [nio-8080-exec-6] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 3572, SQLState: HY000
 [safeticket] [nio-8080-exec-6] o.h.engine.jdbc.spi.SqlExceptionHelper   : Statement aborted because lock(s) could not be acquired immediately and NOWAIT is set.
 ```java
@@ -239,6 +239,7 @@ class TestRunner {
 } catch (PessimisticLockException | ConcurrencyFailureException e) {
 ```
 
+2-2. 
 
 
 
