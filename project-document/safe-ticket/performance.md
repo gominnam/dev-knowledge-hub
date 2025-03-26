@@ -99,20 +99,21 @@ class TestRunner {
 
 - 1-1. 처음 실행 후 결과
 <img src="./images/get-available-first.png" width="800">
-    - 평균 TPS가 약 115로 결과가 나온다.
+    - 평균 TPS가 약 115로 결과가 나옵니다.
 </br></br>
 
 - 1.2 Spring @Cacheable 수정 후 결과
+<img src="./images/get-available-cacheable.png" width="800">
+  - 평균 TPS가 약 231으로 2배 가량 성능 개선을 확인할 수 있었습니다. 
 
 ```java
+// 수정한 소스코드
 @Cacheable("availableTickets")
 @GetMapping("/available/{showtimeId}")
 public ResponseEntity<AvailableTicketsDTO> getAvailableTickets(@PathVariable Long showtimeId) {
     return ResponseEntity.ok(ticketService.getAvailableTickets(showtimeId));
 }
 ```
-<img src="./images/get-available-cacheable.png" width="800">
-    - 평균 TPS가 약 231으로 2배 가량 성능 최적화 된 결과가 나왔다. 
 
 </br></br>
 
@@ -120,7 +121,7 @@ public ResponseEntity<AvailableTicketsDTO> getAvailableTickets(@PathVariable Lon
 
 <details>
     <summary>get 요청 nGrinder 스크립트</summary>
-위에서 작성한 GET 요청에 PUT 요청을 추가하였다.  
+위에서 작성한 GET 요청에 PUT 요청을 추가하였습니다.
 
 ```groovy
 import static net.grinder.script.Grinder.grinder
@@ -234,13 +235,12 @@ class TestRunner {
 - 비관적 잠금 `NOWAIT`으로 인해 잠금을 얻지 못하는 예외처리를 제대로 처리하지 못하여 문제 발생
 [safeticket] [nio-8080-exec-6] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 3572, SQLState: HY000
 [safeticket] [nio-8080-exec-6] o.h.engine.jdbc.spi.SqlExceptionHelper   : Statement aborted because lock(s) could not be acquired immediately and NOWAIT is set.
+
+2-2 해결방법: 예외처리를 수정하여 잠금을 얻지 못할 경우 500 Error가 아닌 200으로 처리 ( 에러 발생 - 0.00% )
 ```java
-// ConcurrencyFailureException 예외를 추가하여 500 Error 대신 200으로 처리
+// ConcurrencyFailureException 예외를 추가
 } catch (PessimisticLockException | ConcurrencyFailureException e) {
 ```
-
-2-2. 
-
 
 
 ### 그라파나 참고 지표
